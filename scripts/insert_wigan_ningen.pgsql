@@ -1,0 +1,2 @@
+insert into books (id, title, description, author_id) values (1, 'No Longer Human', 'A look into a broken mans childhood, teenage life and adulthood during Showa era Japan', 1);
+insert into books (id, title, description, author_id) values (2, 'Road to Wigan Pier', 'George Orwell as he was tramping in England and an interesting look into the working class of the 1940s', 2);
