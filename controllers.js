@@ -5,7 +5,7 @@ console.log(process.env.DATABASE_URL)
 let db;
 if (process.env.DATABASE_URL) {
     db = pgp({
-        connectioString: process.env.DATABASE_URL,
+        connectionString: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false }
     })
 } else {
