@@ -1,14 +1,6 @@
-const { process_params } = require('express/lib/router');
-
 const pgp = require('pg-promise')();
 console.log(process.env.DB_PASS);
 
-if (process.env.DATABASE_URL) {
-    uri = process.env.DATABASE_URL + "?ssl=true"
-}
-
-
-console.log(uri);
 let db;
 if (process.env.DATABASE_URL) {
     db = pgp({
@@ -21,7 +13,8 @@ if (process.env.DATABASE_URL) {
     const host = process.env.DB_HOST;
     const port = process.env.DB_PORT;
 
-    let uri = `${username}:${password}@${host}:${port}/library`
+    let uri = `postgres://${username}:${password}@${host}:${port}/library`
+    console.log(uri)
     db = pgp(uri)
 }
 
