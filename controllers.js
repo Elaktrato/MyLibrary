@@ -1,5 +1,6 @@
 const pgp = require('pg-promise')();
-console.log(process.env.DB_PASS);
+console.log(process.env.DATABASE_URL)
+
 
 let db;
 if (process.env.DATABASE_URL) {
@@ -12,6 +13,8 @@ if (process.env.DATABASE_URL) {
     const password = process.env.DB_PASS;
     const host = process.env.DB_HOST;
     const port = process.env.DB_PORT;
+
+
 
     let uri = `postgres://${username}:${password}@${host}:${port}/library`
     console.log(uri)
