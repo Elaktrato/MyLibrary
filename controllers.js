@@ -34,10 +34,11 @@ async function addBook(book) {
 
 async function getBooks() {
 
-    const result = await db.query('SELECT ${columns:name} FROM ${table:name}', {
-        columns: ['title', 'description'],
-        table: 'books'
-    });
+    const result = await db.query(`
+    select name author, title, description, books.id 
+    from books 
+    left join author 
+    on author.id = books.author_id`);
     return result;
 }
 
@@ -49,6 +50,21 @@ async function getSingleBook(id) {
         bookid: id
     });
     return result;
+}
+
+async function updateBook(id, update) {
+    await db.query('UPDATE books SET description $2 WHERE id = ${id}', {
+        id: id,
+        description: update.description
+    })
+    return getSingleBook(id)
+}
+
+async function deleteBook(id) {
+    await db.query('DELETE FROM books WHERE id = ${id}', {
+        id: id
+    })
+    return true
 }
 
 async function getAuthors() {
@@ -75,5 +91,7 @@ module.exports = {
     getBooks,
     getSingleBook,
     getAuthors,
-    getSingleAuthor
+    getSingleAuthor,
+    updateBook,
+    deleteBook
 }

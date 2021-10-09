@@ -6,7 +6,9 @@ const {
     getBooks,
     getSingleBook,
     getAuthors,
-    getSingleAuthor
+    getSingleAuthor,
+    updateBook,
+    deleteBook
 } = require('./controllers');
 const cors = require('cors');
 
@@ -39,6 +41,25 @@ app.get("/books/:id", async(req, res) => {
         return res.status(400).send(err.message)
     }
 });
+
+app.delete("/books/:id", async(req, res) => {
+    try {
+        const result = await deleteBook(req.params.id);
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
+});
+
+app.put("/books/:id", async(req, res) => {
+    try {
+        const result = await updateBook(req.params.id, req.body);
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
+});
+
 
 app.get("/authors", async(req, res) => {
     try {
