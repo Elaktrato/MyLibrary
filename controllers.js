@@ -28,7 +28,7 @@ async function addBook(book) {
         author_id: book.authorId
     }
 
-    const result = await db.query('INSERT INTO books(${this:name}) VALUE(${this:csv})', newBook)
+    const result = await db.query('INSERT INTO books(${this:name}) VALUES(${this:csv})', newBook)
     return result;
 }
 
