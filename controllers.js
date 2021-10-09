@@ -1,3 +1,5 @@
+const { process_params } = require('express/lib/router');
+
 const pgp = require('pg-promise')();
 console.log(process.env.DB_PASS);
 const username = process.env.DB_USER;
@@ -12,7 +14,15 @@ if (process.env.DATABASE_URL) {
 
 
 console.log(uri);
-const db = pgp(uri)
+let db;
+if (process.env.DATABASE_URL) {
+    db = pgp({
+        connectioString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+    })
+} else {
+    db = pgp(uri)
+}
 
 async function addBook(book) {
     const newBook = {
@@ -44,8 +54,29 @@ async function getSingleBook(id) {
     return result;
 }
 
+async function getAuthors() {
+
+    const result = await db.query('SELECT ${columns:name} FROM ${table:name}', {
+        columns: ['name', 'birthdate'],
+        table: 'author'
+    });
+    return result;
+}
+
+async function getSingleAuthor(id) {
+
+    const result = await db.query('SELECT ${columns:name} FROM ${table:name} WHERE id = $/authorid/', {
+        columns: ['id', 'name'],
+        table: 'author',
+        authorid: id
+    });
+    return result;
+}
+
 module.exports = {
     addBook,
     getBooks,
-    getSingleBook
+    getSingleBook,
+    getAuthors,
+    getSingleAuthor
 }
