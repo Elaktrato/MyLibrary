@@ -23,23 +23,39 @@ app.post("/books", async(req, res) => {
 });
 
 app.get("/books", async(req, res) => {
-    const result = await getBooks();
-    res.status(200).send(result)
+    try {
+        const result = await getBooks();
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
 });
 
 app.get("/books/:id", async(req, res) => {
-    const result = await getSingleBook(req.params.id);
-    res.status(200).send(result)
+    try {
+        const result = await getSingleBook(req.params.id);
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
 });
 
 app.get("/authors", async(req, res) => {
-    const result = await getAuthors();
-    res.status(200).send(result)
+    try {
+        const result = await getAuthors();
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
 });
 
 app.get("/authors/:id", async(req, res) => {
-    const result = await getSingleAuthor(req.params.id);
-    res.status(200).send(result)
+    try {
+        const result = await getSingleAuthor(req.params.id)
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
 });
 
 app.listen(PORT, () => {
